@@ -4,19 +4,15 @@ import seaborn as sns
 from collections import Counter
 import utils.mnist_reader as mnist_reader
 
-# Load the data
 X_train, y_train = mnist_reader.load_mnist('data/fashion', kind='train')
 X_test, y_test = mnist_reader.load_mnist('data/fashion', kind='t10k')
 
-# Reshape the data to 28x28 images
 X_train_reshaped = X_train.reshape(-1, 28, 28)
 X_test_reshaped = X_test.reshape(-1, 28, 28)
 
-# Define class names
 class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
                'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
-# 1. Basic Dataset Information
 print("Dataset Information:")
 print(f"Training set shape: {X_train.shape}")
 print(f"Test set shape: {X_test.shape}")
@@ -25,7 +21,7 @@ print(f"Image dimensions: 28x28 pixels")
 print(f"Total number of training samples: {len(X_train)}")
 print(f"Total number of test samples: {len(X_test)}")
 
-# 2. Class Distribution
+
 train_class_dist = Counter(y_train)
 test_class_dist = Counter(y_test)
 
@@ -45,7 +41,7 @@ plt.tight_layout()
 plt.savefig('class_distribution.png')
 plt.close()
 
-# 3. Sample Images
+
 plt.figure(figsize=(15, 10))
 for i in range(10):
     plt.subplot(2, 5, i+1)
@@ -56,7 +52,7 @@ plt.tight_layout()
 plt.savefig('sample_images.png')
 plt.close()
 
-# 4. Pixel Value Distribution
+
 plt.figure(figsize=(10, 6))
 plt.hist(X_train.flatten(), bins=50, alpha=0.7)
 plt.title('Distribution of Pixel Values')
@@ -65,14 +61,14 @@ plt.ylabel('Frequency')
 plt.savefig('pixel_distribution.png')
 plt.close()
 
-# 5. Summary Statistics
+
 print("\nSummary Statistics:")
 print(f"Minimum pixel value: {X_train.min()}")
 print(f"Maximum pixel value: {X_train.max()}")
 print(f"Mean pixel value: {X_train.mean():.2f}")
 print(f"Standard deviation: {X_train.std():.2f}")
 
-# 6. Class-wise Statistics
+
 print("\nClass-wise Statistics:")
 for i in range(10):
     class_images = X_train[y_train == i]
@@ -81,8 +77,7 @@ for i in range(10):
     print(f"Mean pixel value: {class_images.mean():.2f}")
     print(f"Standard deviation: {class_images.std():.2f}")
 
-# 7. Correlation between classes
-# Calculate mean image for each class
+
 mean_images = np.array([X_train[y_train == i].mean(axis=0) for i in range(10)])
 correlation_matrix = np.corrcoef(mean_images)
 
@@ -94,7 +89,6 @@ plt.tight_layout()
 plt.savefig('class_correlation.png')
 plt.close()
 
-# 8. Additional Analysis: Mean Images for Each Class
 plt.figure(figsize=(15, 10))
 for i in range(10):
     plt.subplot(2, 5, i+1)
